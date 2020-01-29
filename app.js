@@ -1,27 +1,46 @@
 // TODO
+// GroceryListItem
+class GroceryListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      done: false
+    };
+  }
 
-var GroceryListItem = (props) => (
+  onListItemClick() {
+    this.setState({
+      done: !this.state.done
+    });
+  }
 
-  var onMouseHover = (event) => {
-    console.log('I got clicked');
-  };
+  render() {
+    var style = {
+      fontWeight: this.state.done ? 'bold' : 'none'
+    }
 
-  return (
+    return (
+      <li style={style} onMouseEnter={this.onListItemClick.bind(this)}>{this.props.item}</li>
+    );
+  }
+}
+
+  var GroceryList = (props) => (
     <ul>
-      <li onMouseEnter={onMouseHover}>{props.items[0]}</li> // onHover,on
-      <li>{props.items[0]}</li>
-      <li>{props.items[1]}</li>
+      {props.items.map(item =>
+        <GroceryListItem item={item} />
+      )}
     </ul>
   );
-}
-var App = () => (
-  <div>
-    <h2>My Grocery List</h2>
-    <GroceryListItem items={['Cucumbers', 'Kale']}/>
 
-  </div>
-);
-// //////////z
-// // to render the Grocerylist to index.html
+  var App = () => (
+    <div>
+      <h2>Grocery List</h2>
+      <GroceryList items={['Cucumbers', 'Kale']}/>
+    </div>
+  );
+
+// to render the Grocerylist to index.html
 ReactDOM.render(<App />, document.getElementById('app'))
-// ReactDOM.render(<App />, document.getElementById("actual-dom-element-where-I-want-to-render-my-component"));
+
+
